@@ -20,11 +20,15 @@ const userSchema=new mongoose.Schema({
     },
     isAdmin:{
         type:Boolean,
+        required:true,
         default:false
     },
     isBlocked:{
         type:Boolean,
+        required:true,
         default:false
     }
 })
-userSchema()
+const user=mongoose.model("user",userSchema)
+
+module.exports=user
