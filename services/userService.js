@@ -1,7 +1,10 @@
 const User=require('../models/userModels')
 const bcrypt=require("bcryptjs")
 const CustomError = require('../utils/customError')
+const {generateAccessToken}=require('../utils/jwt')
 
+
+//service of new user
 exports.userRegisterServices=async(data)=>{
     const userExist=await User.findOne({email:data.email})
     if(userExist){
@@ -16,4 +19,37 @@ exports.userRegisterServices=async(data)=>{
     });
     const savedUser=await newUser.save()
     return savedUser._id
+}
+
+
+//service of login user
+exports.userLoginServices=async(email,password)=>{
+    const userData=await User.findOne({email})
+    if(!userData){
+        throw new CustomError("Please create an account,Invalid email",400)
+    }
+    const isMatch=await bcrypt.compare(password,userData.password)
+    if(!isMatch){
+        throw new CustomError("Invalid Password,try again",400)
+    }
+    return userData
+}
+
+exports.refreshAccessTokenService=async(refreshToken)=>{
+
+    //refresh token exists
+    if(!refreshToken){
+        throw new CustomError("Refresh token missing",401)
+    }
+    //verify refresh token
+    const decoded=verifyToken(refreshToken,process.env.JWT_REFRESH_SECRET)
+    if(!decoded){
+        throw new CustomError("Invalid or expired refresh token", 403)
+    }
+    const user=await User.findById(decoded.id)
+    if(!user){
+        throw new CustomError("User not found",404)
+    }
+    const newAccessToken=generateAccessToken(user)
+    return {newAccessToken}
 }
