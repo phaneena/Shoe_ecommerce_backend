@@ -2,6 +2,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const STATUS= require("../utils/constants");
 const {productService}=require('../services/productService')
 
+
 // get all products
 exports.getallProducts=asyncHandler(async(req,res)=>{
     const {search,categories,pages}=req.query
@@ -25,3 +26,5 @@ exports.getallProducts=asyncHandler(async(req,res)=>{
         })
     }
 })
+
+

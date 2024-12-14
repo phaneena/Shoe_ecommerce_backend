@@ -17,16 +17,17 @@ exports.productService=async({search,categories,pages=1,limit=10})=>{
         query.categories={$regex:`^${categories}$`, $options:'i'}
     }
 
+
     //pagination
     const skip=(pages-1)*limit
     const total=await products.countDocuments(query)
     const product=await products.find(query).skip(skip).limit(limit)
     // const product=await products.find()
-    console.log('Query:', query);
-    console.log('Pages:', pages);
-    console.log('Limit:', limit);
-    console.log('Total count:', total);
-    console.log('Products:', product);
+    // console.log('Query:', query);
+    // console.log('Pages:', pages);
+    // console.log('Limit:', limit);
+    // console.log('Total count:', total);
+    // console.log('Products:', product);
 
     return{
         product,
