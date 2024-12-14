@@ -4,7 +4,8 @@ const { verifyToken } = require("../utils/jwt")
 
 const authenticate=async(req,res,next)=>{
     try{
-        const token=req.cookies.accessToken
+        // console.log(req.cookies)
+        const token=req.cookies?.accessToken
         if(!token){
             throw new CustomError("Access token is missing",401)
         }
@@ -17,7 +18,7 @@ const authenticate=async(req,res,next)=>{
             throw new CustomError('User not found',404)
         }
         req.user=user
-        next(user)
+        next()
     }
     catch(error){
         next(error)
