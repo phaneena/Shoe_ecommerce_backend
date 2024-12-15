@@ -34,3 +34,10 @@ exports.addOrderService=async(name,address,paymentMethod,total,userId)=>{
       cart.products = [];
       await cart.save();
 }
+
+exports.showOrderService=async(userId)=>{
+
+    const orders = await Order.find({ user: userId }).populate('items.productId'); // Populate product details
+
+    return { orders };
+}
