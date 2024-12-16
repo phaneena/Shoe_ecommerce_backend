@@ -36,8 +36,6 @@ exports.addOrderService=async(name,address,paymentMethod,total,userId)=>{
 }
 
 exports.showOrderService=async(userId)=>{
-
-    const orders = await Order.find({ user: userId }).populate('items.productId'); // Populate product details
-
+    const orders = await Order.find({ user: userId }).populate({path:'items.productId', model:'product'}); // Populate product details
     return { orders };
 }
