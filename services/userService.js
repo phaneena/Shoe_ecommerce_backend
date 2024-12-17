@@ -1,7 +1,7 @@
 const User=require('../models/userModels')
 const bcrypt=require("bcryptjs")
 const CustomError = require('../utils/customError')
-const {generateAccessToken}=require('../utils/jwt')
+const {generateAccessToken,verifyToken}=require('../utils/jwt')
 
 
 //service of new user
