@@ -15,7 +15,7 @@ exports.addToCart=asyncHandler(async(req,res)=>{
 exports.getCart=asyncHandler(async(req,res)=>{
     const userId=req.user._id
     const cart=await getCartServices(userId)
-    if(!cart){
+    if(cart.products.length===0){
         res.status(200).json({status:STATUS.SUCCESS,message:'your cart is empty'})
     }
     else{

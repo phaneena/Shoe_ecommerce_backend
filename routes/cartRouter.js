@@ -6,5 +6,5 @@ const router=express.Router()
 
 router.post('/addToCart/:productId',authenticate,addToCart)
 router.get('/getCart',authenticate,getCart)
-router.delete('/deletCart/:productId',authenticate,deleteCart)
+router.delete('/deleteCart/:productId',authenticate,deleteCart)
 module.exports=router

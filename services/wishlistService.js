@@ -13,18 +13,24 @@ exports.addWishlistService=async(userId,productId)=>{
     if(!userFavourite){
         userFavourite=new Favourite({user:userId,wishlist:[]})
     }
-    console.log(userFavourite)
-    const existingFavourite = userFavourite.wishlist.find(
+    // console.log(userFavourite)
+    const existingFavourite = userFavourite.wishlist.some(
         (item) => item.toString() === productId
     );
     if(existingFavourite){
-        throw new CustomError('item already exist in favourite',400)
+        await Favourite.updateOne(
+            {user:userId},
+            {$pull:{wishlist:productId}}
+        )
     }
-    userFavourite.wishlist.push(productId)
-    await userFavourite.save()
-    return userFavourite.wishlist
-
+    else{
+        userFavourite.wishlist.push(productId)
+        await userFavourite.save()
+        return userFavourite.wishlist
+    }   
 }
+
+//get wishlist
 exports.getWishlistServices=async(userId)=>{
     const userFavourite=await Favourite.findOne({user:userId}).populate("wishlist")
     return userFavourite

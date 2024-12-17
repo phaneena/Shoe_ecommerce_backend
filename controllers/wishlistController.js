@@ -7,9 +7,11 @@ exports.addToWishlist=asyncHandler(async(req,res)=>{
     const userId=req.user._id
     const {productId}=req.params
     const wishlistProduct=await addWishlistService(userId,productId)
-    if(wishlistProduct){
-        res.status(200).json({status:STATUS.SUCCESS,message:'add to favourite'})
-    }
+    console.log(wishlistProduct)
+    const existWishlist=wishlistProduct.includes(productId)
+    const msg=existWishlist===undefined?"add to favourite":"remove from favourite"
+    res.status(200).json({status:STATUS.SUCCESS,message:msg})
+    
 })
 
 //get all favourite

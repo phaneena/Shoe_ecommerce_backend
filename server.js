@@ -22,7 +22,7 @@ app.use('/api/users',cartRouter)
 app.use('/api/users',orderRouter)
 app.use('/api/users',wishlistRouter)
 
-// app.use(errorHandler)
+app.use(errorHandler)
 const PORT=process.env.PORT || 5001
 
 app.listen(PORT,()=>{

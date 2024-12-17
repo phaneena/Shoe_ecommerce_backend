@@ -41,13 +41,12 @@ exports.getCartServices=async(userId)=>{
 
 //delete one item in cart
 
-exports.deleteCartServices=async(userId,productId)=>{
+exports.deleteCartServices=async(productId,userId)=>{
     const result = await Cart.updateOne(
         {user:userId},
         {$pull: {products:{product:productId}}}
     );
-    console.log('Update Result:', result);
-
+    // console.log('Update Result:', result);
     if(result.modifiedCount===0){
         throw new CustomError("Cart not found for the user or product not in cart.", 401)
     } 
