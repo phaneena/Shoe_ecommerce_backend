@@ -1,6 +1,6 @@
 const asyncHandler = require("../utils/asyncHandler");
 const STATUS= require("../utils/constants");
-const {productService}=require('../services/productService')
+const {productService,addProductService,deleteProductService}=require('../services/productService')
 
 
 // get all products
@@ -28,3 +28,16 @@ exports.getallProducts=asyncHandler(async(req,res)=>{
 })
 
 
+//all Products
+exports.addProducts=asyncHandler(async(req,res)=>{
+    const {name,...rest}=req.body
+    const data=await addProductService({name,...rest})
+    res.status(201).json({status:STATUS.SUCCESS,message:'Add Product successfully'})
+
+})
+
+//delete Product
+exports.deleteProduct=asyncHandler(async(req,res)=>{
+    const {id}=req.params
+    await deleteProductService(id)
+})

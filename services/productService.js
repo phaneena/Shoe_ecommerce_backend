@@ -1,4 +1,5 @@
 const products = require("../models/productModel")
+const CustomError = require("../utils/customError")
 
 //get product
 exports.productService=async({search,categories,pages=1,limit=10})=>{
@@ -23,11 +24,6 @@ exports.productService=async({search,categories,pages=1,limit=10})=>{
     const total=await products.countDocuments(query)
     const product=await products.find(query).skip(skip).limit(limit)
     // const product=await products.find()
-    // console.log('Query:', query);
-    // console.log('Pages:', pages);
-    // console.log('Limit:', limit);
-    // console.log('Total count:', total);
-    // console.log('Products:', product);
 
     return{
         product,
@@ -38,4 +34,15 @@ exports.productService=async({search,categories,pages=1,limit=10})=>{
             totalPages:Math.ceil(total/limit)
         }
     }
+}
+
+//add new Product
+exports.addProductService=async({name,...rest})=>{
+    const existingItem=await products.findOne({name})
+    if(existingItem){
+        throw new CustomError('Product already exists',400)
+    }
+    const newProduct=new products({name,...rest})
+    await newProduct.save()
+    return newProduct
 }

@@ -19,7 +19,7 @@ exports.AddCartServices=async(productId,userId)=>{
     const existingIndex=cart.products.findIndex((item)=>item.product.toString()===productId)
     if(existingIndex>-1){
 
-        const currentQuantity=cart.products[existingIndex].quantity //
+        const currentQuantity=cart.products[existingIndex].quantity 
         if(currentQuantity+1>existingProduct.quantity){
             throw new CustomError('You cannot add the product to the quantity,stock is empty',400)
         }
