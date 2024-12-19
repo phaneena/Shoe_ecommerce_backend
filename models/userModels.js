@@ -1,4 +1,6 @@
 const mongoose=require('mongoose')
+const { passwordValidator } = require('../validation/userValidation')
+
 
 const userSchema=new mongoose.Schema({
     name:{
@@ -16,7 +18,8 @@ const userSchema=new mongoose.Schema({
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        validate:passwordValidator
     },
     isAdmin:{
         type:Boolean,
