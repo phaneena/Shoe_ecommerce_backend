@@ -46,3 +46,35 @@ exports.addProductService=async({name,...rest})=>{
     await newProduct.save()
     return newProduct
 }
+
+//delete single product
+exports.deleteProductService=async(productId)=>{
+    const existingProduct=await products.findById(productId)
+    if(!existingProduct){
+        throw new CustomError('Product is unavailable',400)
+    }
+    return await products.findByIdAndUpdate(
+        productId,{isDelete:false},{new:true}
+    )
+
+}
+
+//update a Product
+
+exports.updateProductService=async(_id,...updateProduct)=>{
+    const existing=await products.findById(_id)
+    if(!existing){
+        throw new CustomError('product is unavailable',400)
+    }
+    const data=await products.findByIdAndUpdate(_id,{ $set:updateProduct},{new:true})
+    return data
+}
+
+//get single product
+exports.singleProductService=async(id)=>{
+    const existingproduct=await products.find(id)
+    if(!existingproduct){
+        throw new CustomError('product is not available',400)
+    }
+    return existingproduct
+}

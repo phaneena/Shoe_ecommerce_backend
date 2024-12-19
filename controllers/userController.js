@@ -1,8 +1,9 @@
 const asyncHandler=require('../utils/asyncHandler')
 const STATUS = require('../utils/constants')
 const {userRegisterServices,userLoginServices}=require('../services/userService')
-const { generateAccessToken, generateRefreshToken, verifyToken } = require('../utils/jwt')
+const { generateAccessToken, generateRefreshToken } = require('../utils/jwt')
 const User = require('../models/userModels')
+const isAdmin=require('../middlewares/isAdmin')
 // const CustomError=require('../utils/customError')
 const {refreshAccessTokenService}=require("../services/userService")
 
@@ -17,6 +18,7 @@ exports.registerUser=asyncHandler(async(req,res)=>{
     })
 })
 
+
 exports.loginUser=asyncHandler(async(req,res)=>{
     const {email,password}=req.body
     const User=await userLoginServices(email,password)
@@ -28,7 +30,7 @@ exports.loginUser=asyncHandler(async(req,res)=>{
     .status(200).
     json({
         status:STATUS.SUCCESS,
-        message:"user login successfully"
+        message:User.isAdmin ?'Admin Login sucessfully':"User Login successfully"
     })
 })
 
