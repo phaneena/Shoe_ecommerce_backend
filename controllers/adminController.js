@@ -1,6 +1,6 @@
 const asyncHandler = require("../utils/asyncHandler");
 const STATUS = require("../utils/constants");
-const { getAllUserService } = require("../services/adminService");
+const { getAllUserService ,singleUserService} = require("../services/adminService");
 
 //get all users
 exports.allUsers = asyncHandler(async (req, res) => {
@@ -17,3 +17,10 @@ exports.allUsers = asyncHandler(async (req, res) => {
     data: { users: usersList, totalUsers, totalPages, currentPage: pageInt },
   });
 });
+
+//specific user
+exports.singleUsers=asyncHandler(async(req,res)=>{
+  const {id}=req.params
+  const user=await singleUserService(id)
+  res.json({status:STATUS.SUCCESS,message:'user details...',user})
+})
