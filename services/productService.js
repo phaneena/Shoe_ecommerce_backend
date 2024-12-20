@@ -2,7 +2,7 @@ const products = require("../models/productModel")
 const CustomError = require("../utils/customError")
 
 //get product
-exports.productService=async({search,categories,pages=1,limit=10})=>{
+exports.productService=async({search,categories,page=1,limit=10})=>{
     const query={isDelete:false}
 
     //Add search
@@ -20,7 +20,7 @@ exports.productService=async({search,categories,pages=1,limit=10})=>{
 
 
     //pagination
-    const skip=(pages-1)*limit
+    const skip=(page-1)*limit
     const total=await products.countDocuments(query)
     const product=await products.find(query).skip(skip).limit(limit)
     // const product=await products.find()
@@ -29,7 +29,7 @@ exports.productService=async({search,categories,pages=1,limit=10})=>{
         product,
         pagination:{
             total,
-            pages,
+            page,
             limit,
             totalPages:Math.ceil(total/limit)
         }
@@ -72,7 +72,8 @@ exports.updateProductService=async(_id,...updateProduct)=>{
 
 //get single product
 exports.singleProductService=async(id)=>{
-    const existingproduct=await products.find(id)
+    const existingproduct=await products.findById(id)
+    // console.log(existingproduct)
     if(!existingproduct){
         throw new CustomError('product is not available',400)
     }

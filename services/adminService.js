@@ -19,3 +19,21 @@ exports.singleUserService=async(id)=>{
     }
     return users
 }
+
+//Block user
+exports.userBlockService=async(id)=>{
+    const userDetails=await User.findById(id)
+    if(!userDetails){
+        throw new CustomError('user not found',400)
+    }
+    else{
+        if(userDetails.isBlocked){
+            userDetails.isBlocked=false
+        }
+        else{
+            userDetails.isBlocked=true
+        }
+        userDetails.save()
+        return userDetails
+    }
+}

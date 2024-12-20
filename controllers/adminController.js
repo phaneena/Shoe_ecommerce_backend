@@ -1,6 +1,6 @@
 const asyncHandler = require("../utils/asyncHandler");
 const STATUS = require("../utils/constants");
-const { getAllUserService ,singleUserService} = require("../services/adminService");
+const { getAllUserService ,singleUserService,userBlockService} = require("../services/adminService");
 
 //get all users
 exports.allUsers = asyncHandler(async (req, res) => {
@@ -23,4 +23,12 @@ exports.singleUsers=asyncHandler(async(req,res)=>{
   const {id}=req.params
   const user=await singleUserService(id)
   res.json({status:STATUS.SUCCESS,message:'user details...',user})
+})
+
+//user blocking
+exports.userBlock=asyncHandler(async(req,res)=>{
+  const {id}=req.params
+  const user=await userBlockService(id)
+  const message=user.isBlocked?'User is Block':'User is Unblock'
+  res.json({status:STATUS.SUCCESS,message:message})
 })

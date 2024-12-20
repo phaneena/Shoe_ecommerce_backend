@@ -6,11 +6,11 @@ const CustomError = require("../utils/customError");
 
 // get all products
 exports.getallProducts=asyncHandler(async(req,res)=>{
-    const {search,categories,pages}=req.query
+    const {search,categories,page}=req.query
     const {product,pagination}=await productService({
         search,
         categories,
-        pages:parseInt(pages,10) ||1,
+        page:parseInt(page,10) ||1,
         limit:10
     })
     if(product.length===0){
