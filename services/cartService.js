@@ -51,3 +51,28 @@ exports.deleteCartServices=async(productId,userId)=>{
         throw new CustomError("Cart not found for the user or product not in cart.", 401)
     } 
 }
+
+//update quantity
+exports.updateCartService=async(productId,quantity,userId)=>{
+    if(!productId ||quantity===null){
+        throw new CustomError('product id and quantity are required',400)
+    }
+    const cart=await Cart.findOne({user:userId})
+    if(!cart){
+        throw new CustomError('cart not found this user')
+    }
+    const productItem=cart.products.findIndex((item)=>item.product.toString()===productId)
+    if(productItem==-1){
+        throw new CustomError('product not found in the cart',404)
+    }
+    const productDetails=await products.findById(productId)
+    if(!productDetails){
+        throw new CustomError('product not found',404)
+    }
+    if(quantity>productDetails.quantity){
+        throw new CustomError('Insufficient stock for the requested quantity')
+    }
+    cart.products[productItem].quantity=quantity
+    await cart.save()
+    return cart
+}

@@ -26,14 +26,14 @@ exports.userRegisterServices=async(data)=>{
 exports.userLoginServices=async(email,password)=>{
     const userData=await User.findOne({email})
     if(!userData){
-        throw new CustomError("Please create an account,Invalid email",400)
+        throw new CustomError("Invalid email or Password",401)
     }
     const isMatch=await bcrypt.compare(password,userData.password)
     if(!isMatch){
-        throw new CustomError("Invalid Password,try again",400)
+        throw new CustomError("Invalid Email or Password",401)
     }
     if(userData.isBlock){
-        throw new CustomError("Your account is blocked. Contact support.", 403)
+        throw new CustomError("Your account is blocked. Please contact Admin.", 403)
     }
     return userData
 }
