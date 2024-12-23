@@ -1,6 +1,11 @@
 const asyncHandler = require("../utils/asyncHandler");
 const STATUS = require("../utils/constants");
-const { getAllUserService ,singleUserService,userBlockService,totalRevenueService} = require("../services/adminService");
+const {
+  getAllUserService,
+  singleUserService,
+  userBlockService,
+  totalRevenueService,
+} = require("../services/adminService");
 
 //get all users
 exports.allUsers = asyncHandler(async (req, res) => {
@@ -19,24 +24,23 @@ exports.allUsers = asyncHandler(async (req, res) => {
 });
 
 //specific user
-exports.singleUsers=asyncHandler(async(req,res)=>{
-  const {id}=req.params
-  const user=await singleUserService(id)
-  res.json({status:STATUS.SUCCESS,message:'user details...',user})
-})
+exports.singleUsers = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await singleUserService(id);
+  res.json({ status: STATUS.SUCCESS, message: "user details...", user });
+});
 
 //user blocking
-exports.userBlock=asyncHandler(async(req,res)=>{
-  const {id}=req.params
-  const user=await userBlockService(id)
-  const message=user.isBlock?'User is Block':'User is Unblock'
-  res.json({status:STATUS.SUCCESS,message})
-})
+exports.userBlock = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const user = await userBlockService(id);
+  const message = user.isBlock ? "User is Block" : "User is Unblock";
+  res.json({ status: STATUS.SUCCESS, message });
+});
 
 //total product purchased
-exports.totalRevenue=asyncHandler(async(req,res)=>{
-  const totalProfit=await totalRevenueService()
-  const total=totalProfit.length>0?totalProfit[0].totalRevenue:0
-  res.json({status:STATUS.SUCCESS,message:'total Revenue',total})
-
-})
+exports.totalRevenue = asyncHandler(async (req, res) => {
+  const totalProfit = await totalRevenueService();
+  const total = totalProfit.length > 0 ? totalProfit[0].totalRevenue : 0;
+  res.json({ status: STATUS.SUCCESS, message: "total Revenue", total });
+});
