@@ -29,6 +29,12 @@ exports.singleUsers=asyncHandler(async(req,res)=>{
 exports.userBlock=asyncHandler(async(req,res)=>{
   const {id}=req.params
   const user=await userBlockService(id)
-  const message=user.isBlocked?'User is Block':'User is Unblock'
-  res.json({status:STATUS.SUCCESS,message:message})
+  const message=user.isBlock?'User is Block':'User is Unblock'
+  res.json({status:STATUS.SUCCESS,message})
 })
+
+// //total product purchased
+// exports.totalRevenue=asyncHandler(async(req,res)=>{
+//   const totalProfit=await totalRevenueService()
+
+// })

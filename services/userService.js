@@ -32,6 +32,9 @@ exports.userLoginServices=async(email,password)=>{
     if(!isMatch){
         throw new CustomError("Invalid Password,try again",400)
     }
+    if(userData.isBlock){
+        throw new CustomError("Your account is blocked. Contact support.", 403)
+    }
     return userData
 }
 

@@ -26,14 +26,8 @@ exports.userBlockService=async(id)=>{
     if(!userDetails){
         throw new CustomError('user not found',400)
     }
-    else{
-        if(userDetails.isBlocked){
-            userDetails.isBlocked=false
-        }
-        else{
-            userDetails.isBlocked=true
-        }
-        userDetails.save()
-        return userDetails
-    }
+    userDetails.isBlock = !userDetails.isBlock;
+    userDetails.save()
+    return userDetails
+        
 }

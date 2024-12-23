@@ -11,6 +11,6 @@ router.delete('/deleteproduct',authenticate,isAdmin,deleteProduct)
 router.put('/updateproduct',authenticate,isAdmin,updateProduct)
 router.get('/getusers',authenticate,isAdmin,allUsers)
 router.get('/getusers/:id',authenticate,isAdmin,singleUsers)
-router.patch('/userBlock/:id',authenticate,isAdmin,userBlock)
+router.patch('/blockUser/:id',authenticate,isAdmin,userBlock)
 
 module.exports=router
