@@ -1,6 +1,6 @@
 const asyncHandler = require("../utils/asyncHandler");
 const STATUS = require("../utils/constants");
-const { getAllUserService ,singleUserService,userBlockService} = require("../services/adminService");
+const { getAllUserService ,singleUserService,userBlockService,totalRevenueService} = require("../services/adminService");
 
 //get all users
 exports.allUsers = asyncHandler(async (req, res) => {
@@ -33,8 +33,10 @@ exports.userBlock=asyncHandler(async(req,res)=>{
   res.json({status:STATUS.SUCCESS,message})
 })
 
-// //total product purchased
-// exports.totalRevenue=asyncHandler(async(req,res)=>{
-//   const totalProfit=await totalRevenueService()
+//total product purchased
+exports.totalRevenue=asyncHandler(async(req,res)=>{
+  const totalProfit=await totalRevenueService()
+  const total=totalProfit.length>0?totalProfit[0].totalRevenue:0
+  res.json({status:STATUS.SUCCESS,message:'total Revenue',total})
 
-// })
+})

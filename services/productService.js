@@ -54,19 +54,20 @@ exports.deleteProductService=async(productId)=>{
         throw new CustomError('Product is unavailable',400)
     }
     return await products.findByIdAndUpdate(
-        productId,{isDelete:false},{new:true}
+        productId,{isDelete:true},{new:true}
     )
 
 }
 
 //update a Product
 
-exports.updateProductService=async(_id,...updateProduct)=>{
+exports.updateProductService=async(_id,updateItems)=>{
     const existing=await products.findById(_id)
     if(!existing){
         throw new CustomError('product is unavailable',400)
     }
-    const data=await products.findByIdAndUpdate(_id,{ $set:updateProduct},{new:true})
+    const data=await products.findByIdAndUpdate({_id,isDelete:false},{ $set:{...updateItems}},{new:true})
+    // console.log(data)
     return data
 }
 

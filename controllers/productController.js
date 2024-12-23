@@ -40,8 +40,8 @@ exports.addProducts=asyncHandler(async(req,res)=>{
 //delete Product
 exports.deleteProduct=asyncHandler(async(req,res)=>{
     const {productId}=req.params
-    await deleteProductService(productId)
-    res.json({status:STATUS.SUCCESS,message:'Deleted Product Succesfully'})
+    const Products=await deleteProductService(productId)
+    res.json({status:STATUS.SUCCESS,message:'Deleted Product Succesfully',Products})
 })
 
 //update Product
@@ -51,7 +51,7 @@ exports.updateProduct=asyncHandler(async(req,res)=>{
         throw new CustomError('Product is not found')
     }
     const updateProduct=await updateProductService(_id,updateItems)
-    res.status(200).json({status:STATUS.SUCCESS,message:'Product update successfully',updateProduct})
+    res.status(200).json({status:STATUS.SUCCESS,message:'Product updated successfully',updateProduct})
 })
 
 //get single product

@@ -1,4 +1,5 @@
 const isAdmin = require("../middlewares/isAdmin")
+const Order = require("../models/orderModel")
 const User=require('../models/userModels')
 const CustomError = require("../utils/customError")
 
@@ -30,4 +31,10 @@ exports.userBlockService=async(id)=>{
     userDetails.save()
     return userDetails
         
+}
+
+//get total revenue
+exports.totalRevenueService=async()=>{
+    const result=await Order.aggregate([{$group:{_id:null,totalRevenue:{$sum:'$total'}}}])
+    return result
 }
