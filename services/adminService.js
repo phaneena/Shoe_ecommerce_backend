@@ -33,7 +33,7 @@ exports.userBlockService = async (id) => {
   userDetails.save();
   return userDetails;
 };
-
+ 
 //get total revenue
 exports.totalRevenueService = async () => {
   const result = await Order.aggregate([

@@ -33,7 +33,7 @@ exports.getallProducts=asyncHandler(async(req,res)=>{
 exports.addProducts=asyncHandler(async(req,res)=>{
     const {name,...rest}=req.body
     const data=await addProductService({name,...rest})
-    res.status(201).json({status:STATUS.SUCCESS,message:'Add Product successfully'})
+    res.status(201).json({status:STATUS.SUCCESS,message:'Add Product successfully',data})
 })
 
 

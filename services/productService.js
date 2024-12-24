@@ -67,7 +67,6 @@ exports.updateProductService=async(_id,updateItems)=>{
         throw new CustomError('product is unavailable',400)
     }
     const data=await products.findByIdAndUpdate({_id,isDelete:false},{ $set:{...updateItems}},{new:true})
-    // console.log(data)
     return data
 }
 
